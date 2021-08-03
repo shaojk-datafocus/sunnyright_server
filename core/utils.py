@@ -48,9 +48,9 @@ def wrap_response(data=None,errCode=0, exception="",**kwargs):
 
 def get_post_form() -> Dict:
     """获取POST表单"""
-    req = request.data.decode('utf-8')
-    if req:
-        return Dict(json.loads(req))
+    body = request.data.decode('utf-8')
+    if body:
+        return Dict(json.loads(body))
     return Dict()
 
 def get_params(key: str,default=None):

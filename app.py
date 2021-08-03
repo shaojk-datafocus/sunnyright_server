@@ -8,10 +8,19 @@
 from flask import Flask
 
 from views import inventory, purchase
+from modules import db
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///LiteDB.db'
+app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True # 自动commit
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
+db.init_app(app)
+
 app.register_blueprint(inventory)
 app.register_blueprint(purchase)
+
+with app.app_context():
+    db.create_all()
 @app.route('/')
 def hello_world():
     return 'Hello, World!'
